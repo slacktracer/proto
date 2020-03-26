@@ -47,10 +47,5 @@
     "webpack-dev-server": "^3.10.3",
     "webpack-merge": "^4.2.2"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run type-check-then-lint-staged"
-    }
-  },
   "license": "MIT"
 }
