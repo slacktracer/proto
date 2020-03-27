@@ -2,6 +2,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "webpack $npm_package_config_production",
+    "deploy": "s3-deploy './dist/**' --cwd './dist/' --region us-east-1 --bucket proto.slacktracer.com --distId E30FFC1RICEDL3 --deleteRemoved",
     "type-check-then-lint-staged": "npm run type-check && lint-staged",
     "serve": "PORT=$npm_package_config_development_server_port webpack-dev-server $npm_package_config_development",
     "test": "jest",

@@ -12,6 +12,8 @@ jobs:
             - run: npm ci
             - run: npm run type-check
             - run: npm test
+            - run: npm run build
+            - run: npm run deploy
 workflows:
     build-and-test:
       jobs:
