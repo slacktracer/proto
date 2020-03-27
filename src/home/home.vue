@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { version } from "../../package.json";
-import x from "../test";
+import x from "../something";
 import HelloWorld from "./components/hello-world.vue";
 
 export default {

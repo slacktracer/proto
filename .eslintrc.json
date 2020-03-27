@@ -6,6 +6,8 @@
     "extends": [
       "eslint:recommended",
       "plugin:@typescript-eslint/recommended",
+      "plugin:jest/recommended",
+      "plugin:jest/style",
       "plugin:prettier/recommended",
       "plugin:vue/essential",
       "prettier/@typescript-eslint"
@@ -21,4 +23,3 @@
       "@typescript-eslint/no-explicit-any": 0
     }
   }
-  
