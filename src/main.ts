@@ -7,7 +7,7 @@ import store from "./app/store";
 new Vue({
   router,
   store,
-  render: (h): any => h(App)
+  render: (h): any => h(App),
 }).$mount("#app");
 
 function stuff(value: number, other: string): string {

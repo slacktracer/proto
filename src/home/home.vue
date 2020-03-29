@@ -8,9 +8,7 @@
       </p>
     </div>
     <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld
-      msg="Welcome to Your Vue.js + TypeScript Custom Build Process App"
-    />
+    <HelloWorld msg="Tentative seed project" />
   </div>
 </template>
 
@@ -22,22 +20,22 @@ import HelloWorld from "./components/hello-world.vue";
 export default {
   name: "Home",
   components: {
-    HelloWorld
+    HelloWorld,
   },
   data(): Record<string, any> {
     return {
       envvar: process.env.DATA,
       greeting: "Hello",
-      version
+      version,
     };
   },
   computed: {
-    val: (): number => x()
+    val: (): number => x(),
   },
   methods: {
     stuff: function stuff(): string {
       return "test";
-    }
-  }
+    },
+  },
 };
 </script>

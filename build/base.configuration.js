@@ -9,12 +9,12 @@ export const baseConfiguration = {
     rules: [
       {
         test: /\.vue$/,
-        loader: "vue-loader"
+        loader: "vue-loader",
       },
       {
         test: /\.ts$/,
         exclude: /node_modules|vue\/src/,
-        loader: "babel-loader"
+        loader: "babel-loader",
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -22,12 +22,12 @@ export const baseConfiguration = {
           {
             loader: "file-loader",
             options: {
-              esModule: false
-            }
-          }
-        ]
-      }
-    ]
+              esModule: false,
+            },
+          },
+        ],
+      },
+    ],
   },
   optimization: {
     runtimeChunk: "single",
@@ -36,23 +36,23 @@ export const baseConfiguration = {
         vendor: {
           chunks: "all",
           name: "vendors",
-          test: /[\\/]node_modules[\\/]/
-        }
-      }
-    }
+          test: /[\\/]node_modules[\\/]/,
+        },
+      },
+    },
   },
   output: {
     chunkFilename: "[name].[contenthash].js",
     filename: "[name].[contenthash].js",
     path: path.resolve("./dist"),
-    publicPath: "/"
+    publicPath: "/",
   },
   plugins: [
     new Dotenv({ systemvars: true }),
     new HtmlWebpackPlugin({ template: "./src/index.html" }),
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
   ],
   resolve: {
-    extensions: [".js", ".json", ".ts"]
-  }
+    extensions: [".js", ".json", ".ts"],
+  },
 };

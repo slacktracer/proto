@@ -11,17 +11,17 @@ const productionConfiguration = {
     rules: [
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"]
-      }
-    ]
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
+    ],
   },
   plugins: [
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       chunkFilename: "[name].[contenthash].css",
-      filename: "[name].[contenthash].css"
-    })
-  ]
+      filename: "[name].[contenthash].css",
+    }),
+  ],
 };
 
 export default webpackMerge(baseConfiguration, productionConfiguration);

@@ -2,11 +2,15 @@
   "version": "1.0.0",
   "scripts": {
     "build": "webpack $npm_package_config_production",
-    "deploy": "s3-deploy './dist/**' --cwd './dist/' --region us-east-1 --bucket proto.slacktracer.com --distId E30FFC1RICEDL3 --deleteRemoved",
-    "type-check-then-lint-staged": "npm run type-check && lint-staged",
+    "deploy": "s3-deploy './dist/**' --cwd './dist/' --region us-east-1 --bucket proto.slacktracer.com --distId E30FFC1RICEDL3 --invalidate 'index.html' --deleteRemoved",
+    "format": "prettier . --write",
+    "format-check": "prettier . --check",
+    "lint": "eslint . --ext .js,.ts,.vue",
+    "lint:fix": "eslint . --ext .js,.ts,.vue --fix",
     "serve": "PORT=$npm_package_config_development_server_port webpack-dev-server $npm_package_config_development",
     "test": "jest",
-    "type-check": "tsc --project ./src/tsconfig.json"
+    "type-check": "tsc --project ./src/tsconfig.json",
+    "type-check-then-lint-staged": "npm run type-check && lint-staged"
   },
   "config": {
     "development_server_port": 10000,
@@ -42,7 +46,7 @@
     "jest": "^25.2.3",
     "lint-staged": "^10.0.8",
     "mini-css-extract-plugin": "^0.9.0",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.2",
     "s3-deploy": "^1.4.0",
     "typescript": "^3.8.2",
     "vue-loader": "^15.9.0",

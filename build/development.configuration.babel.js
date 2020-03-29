@@ -6,7 +6,7 @@ const developmentConfiguration = {
   devServer: {
     historyApiFallback: true,
     host: "0.0.0.0",
-    port: process.env.PORT
+    port: process.env.PORT,
   },
   devtool: "inline-source-map",
   mode: "development",
@@ -14,10 +14,10 @@ const developmentConfiguration = {
     rules: [
       {
         test: /\.css$/,
-        use: ["vue-style-loader", "css-loader"]
-      }
-    ]
-  }
+        use: ["vue-style-loader", "css-loader"],
+      },
+    ],
+  },
 };
 
 export default webpackMerge(baseConfiguration, developmentConfiguration);

@@ -66,8 +66,8 @@ import Vue from "vue";
 export default Vue.extend({
   name: "HelloWorld",
   props: {
-    msg: { default: "", type: String }
-  }
+    msg: { default: "", type: String },
+  },
 });
 </script>
 
