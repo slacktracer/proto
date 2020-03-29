@@ -24,7 +24,7 @@ export default {
   },
   data(): Record<string, any> {
     return {
-      envvar: process.env.DATA,
+      envvar: process.env[process.env.PREFIX + "DATA"],
       greeting: "Hello",
       version,
     };
