@@ -7,17 +7,19 @@ jobs:
       name: node/default
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: npm i
-            - run: npm run format-check
-            - run: npm run type-check
-            - run: npm run lint
-            - run: npm test
-            - run: TARGET=STAGING npm run build
-            - run: TARGET=DEMO npm run build
-            - run: TARGET=PRODUCTION npm run build
-            - run: npm run deploy
+      - restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run: npm i
+      - run: npm run format-check
+      - run: npm run type-check
+      - run: npm run lint
+      - run: npm test
+      - run: TARGET=STAGING npm run build
+      - run: TARGET=DEMO npm run build
+      - run: TARGET=PRODUCTION npm run build
+      - run: npm run deploy
 workflows:
   install_type-check_lint_test_build_deploy:
     jobs:
