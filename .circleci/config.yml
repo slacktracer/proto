@@ -10,9 +10,7 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
-      # - node/with-cache:
-          # steps:
-      - run: npm i
+      - run: npm ci
       - run: npm run format-check
       - run: npm run type-check
       - run: npm run lint
