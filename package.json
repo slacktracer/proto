@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "scripts": {
-    "build": "webpack $npm_package_config_production",
+    "build": "PREFIX=STAGING_ webpack $npm_package_config_production",
     "deploy": "s3-deploy './dist/**' --cwd './dist/' --region us-east-1 --bucket proto.slacktracer.com --distId E30FFC1RICEDL3 --invalidate 'index.html' --deleteRemoved",
     "format": "prettier . --write",
     "format-check": "prettier . --check",
@@ -15,7 +15,7 @@
   "config": {
     "development_server_port": 10000,
     "development": "--config ./build/development.configuration.babel.js",
-    "production": "--config ./build/production.configuration.babel.js --env.NODE_ENV=production --env.PREFIX=STAGING_"
+    "production": "--config ./build/production.configuration.babel.js"
   },
   "dependencies": {
     "vue": "^2.6.11",
