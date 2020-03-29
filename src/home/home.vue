@@ -5,6 +5,7 @@
         {{ greeting }} ({{ val }}) World! {{ version }}::{{ envvar }}::{{
           stuff("", 10)
         }}
+        --- {{ crazy }}
       </p>
     </div>
     <img alt="Vue logo" src="./assets/logo.png" />
@@ -24,7 +25,10 @@ export default {
   },
   data(): Record<string, any> {
     return {
-      envvar: process.env[process.env.PREFIX + "DATA"],
+      // eslint-disable-next-line no-undef
+      crazy: !!$$__FF_CTHULHU__$$,
+      // eslint-disable-next-line no-undef
+      envvar: $$__DATA__$$ || process.env.DATA,
       greeting: "Hello",
       version,
     };

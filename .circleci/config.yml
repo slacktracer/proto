@@ -14,7 +14,9 @@ jobs:
             - run: npm run type-check
             - run: npm run lint
             - run: npm test
-            - run: npm run build
+            - run: TARGET=STAGING npm run build
+            - run: TARGET=DEMO npm run build
+            - run: TARGET=PRODUCTION npm run build
             - run: npm run deploy
 workflows:
   install_type-check_lint_test_build_deploy:
