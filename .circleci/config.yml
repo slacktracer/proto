@@ -9,7 +9,7 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
-            - run: npm ci
+            - run: npm i
             - run: npm run format-check
             - run: npm run type-check
             - run: npm run lint
