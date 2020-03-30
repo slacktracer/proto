@@ -1,25 +1,33 @@
 version: 2.1
-orbs:
-  node: circleci/node@1.1.6
+
 jobs:
-  install_type-check_lint_test_build_deploy:
-    executor:
-      name: node/default
+  install-dependencies_type-check__format_lint:
+    docker:
+      - image: circleci/node:12.16.1-alpine3.9
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package-lock.json" }}
       - run: npm ci
       - run: npm run format-check
       - run: npm run type-check
       - run: npm run lint
+  test:
+    docker:
+      - image: circleci/node:12.16.1-alpine3.9
+    steps:
+      - checkout
       - run: npm test
+  build_deploy:
+    docker:
+      - image: circleci/node:12.16.1-alpine3.9
+    steps:
+      - checkout
       - run: TARGET=STAGING npm run build
       - run: TARGET=DEMO npm run build
       - run: TARGET=PRODUCTION npm run build
       - run: npm run deploy
 workflows:
-  install_type-check_lint_test_build_deploy:
+  integrate_delivery:
     jobs:
-      - install_type-check_lint_test_build_deploy
+      - install-dependencies_type-check__format_lint
+      - test
+      - build_deploy
