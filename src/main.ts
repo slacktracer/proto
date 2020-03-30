@@ -16,4 +16,4 @@ function stuff(value: number, other: string): string {
   return "test";
 }
 
-console.log(stuff(2, "34"));
+console.log(stuff(2, "34"))
