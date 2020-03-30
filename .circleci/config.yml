@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   install-dependencies_type-check__format_lint:
     docker:
-      - image: circleci/node:12.16.1-alpine3.9
+      - image: circleci/node:12
     steps:
       - checkout
       - run: npm ci
@@ -12,13 +12,13 @@ jobs:
       - run: npm run lint
   test:
     docker:
-      - image: circleci/node:12.16.1-alpine3.9
+      - image: circleci/node:12
     steps:
       - checkout
       - run: npm test
   build_deploy:
     docker:
-      - image: circleci/node:12.16.1-alpine3.9
+      - image: circleci/node:12
     steps:
       - checkout
       - run: TARGET=STAGING npm run build
