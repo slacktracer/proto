@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "webpack $npm_package_config_production",
-    "deploy": "s3-deploy './dist/**' --cwd './dist/' --region us-east-1 --bucket proto.slacktracer.com --distId E30FFC1RICEDL3 --invalidate 'index.html' --deleteRemoved",
+    "deploy": "s3-deploy './dist/**' --cwd './dist/' --region $AWS_REGION --bucket $BUCKET --distId $DIST_ID --invalidate 'index.html' --deleteRemoved",
     "format": "prettier . --write",
     "format-check": "prettier . --check",
     "lint": "eslint . --ext .js,.ts,.vue",

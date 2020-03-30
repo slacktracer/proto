@@ -18,6 +18,7 @@ jobs:
       - run: npm run format-check
       - run: npm run type-check
       - run: npm run lint
+
   test:
     docker:
       - image: circleci/node:12
@@ -28,7 +29,8 @@ jobs:
             - v1-dependencies-{{ checksum "package-lock.json" }}
             - v1-dependencies-
       - run: npm test
-  build_deploy:
+
+  build_deploy-staging:
     docker:
       - image: circleci/node:12
     steps:
@@ -37,10 +39,33 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
             - v1-dependencies-
-      - run: TARGET=STAGING npm run build
-      - run: TARGET=DEMO npm run build
-      - run: TARGET=PRODUCTION npm run build
-      - run: npm run deploy
+      - run: BUCKET=$STAGING_BUCKET DIST_ID=$STAGING_DIST_ID TARGET=STAGING npm run build
+      - run: BUCKET=$STAGING_BUCKET DIST_ID=$STAGING_DIST_ID TARGET=STAGING npm run deploy
+
+  build_deploy-demo:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v1-dependencies-
+      - run: BUCKET=$DEMO_BUCKET DIST_ID=$DEMO_DIST_ID TARGET=DEMO npm run build
+      - run: BUCKET=$DEMO_BUCKET DIST_ID=$DEMO_DIST_ID TARGET=DEMO npm run deploy
+
+  build_deploy-production:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v1-dependencies-
+      - run: BUCKET=$PRODUCTION_BUCKET DIST_ID=$PRODUCTION_DIST_ID TARGET=PRODUCTION npm run build
+      - run: BUCKET=$PRODUCTION_BUCKET DIST_ID=$PRODUCTION_DIST_ID TARGET=PRODUCTION npm run deploy
+
 workflows:
   integrate_delivery:
     jobs:
@@ -48,6 +73,6 @@ workflows:
       - test:
           requires:
             - install-dependencies_type-check__format_lint
-      - build_deploy:
+      - build_deploy-production:
           requires:
             - test
