@@ -41,9 +41,9 @@ workflows:
   integrate_delivery:
     jobs:
       - install-dependencies_type-check__format_lint
-      - test
+      - test:
           requires:
             - install-dependencies_type-check__format_lint
-      - build_deploy
+      - build_deploy:
           requires:
             - test
