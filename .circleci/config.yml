@@ -6,6 +6,10 @@ jobs:
       - image: circleci/node:12
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v1-dependencies-
       - run: npm ci
       - run: npm run format-check
       - run: npm run type-check
@@ -15,12 +19,20 @@ jobs:
       - image: circleci/node:12
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v1-dependencies-
       - run: npm test
   build_deploy:
     docker:
       - image: circleci/node:12
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v1-dependencies-
       - run: TARGET=STAGING npm run build
       - run: TARGET=DEMO npm run build
       - run: TARGET=PRODUCTION npm run build
@@ -30,4 +42,8 @@ workflows:
     jobs:
       - install-dependencies_type-check__format_lint
       - test
+          requires:
+            - install-dependencies_type-check__format_lint
       - build_deploy
+          requires:
+            - test
