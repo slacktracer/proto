@@ -43,7 +43,7 @@ jobs:
             - v1-dependencies-{{ checksum "package-lock.json" }}
             - v1-dependencies-
       - run: TARGET=STAGING npm run build
-      - run:  ~/.local/bin/aws s3 sync ./dist s3://proto-dists/$CIRCLE_TAG/staging --delete
+      - run: ~/.local/bin/aws s3 sync ./dist s3://proto-dists/$CIRCLE_TAG/staging --delete
 
   build_deploy-demo:
     docker:
