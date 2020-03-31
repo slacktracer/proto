@@ -85,4 +85,5 @@ workflows:
             - test
           filters:
             tags:
-              only: /^v1\.\d+\.\d+$/
+              # only: /^v1\.\d+\.\d+$/
+              only: /^v{0,1}\d+[.]\d+[.]\d+$/
