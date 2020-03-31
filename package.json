@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "build": "webpack $npm_package_config_production",
     "deploy": "npm version patch -m 'Upgrade to %s' && git push --follow-tags",
