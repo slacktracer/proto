@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "webpack $npm_package_config_production",
-    "deploy": "s3-deploy './dist/**' --cwd './dist/' --region $AWS_REGION --bucket $BUCKET --distId $DIST_ID --invalidate 'index.html' --deleteRemoved",
+    "deploy": "npm version patch -m 'Upgrade to %s' && git push --follow-tags",
     "format": "prettier . --write",
     "format-check": "prettier . --check",
     "lint": "eslint . --ext .js,.ts,.vue",

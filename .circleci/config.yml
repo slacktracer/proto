@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  aws-cli: circleci/aws-cli@1.0.0
+
 jobs:
   install-dependencies_type-check__format_lint:
     docker:
@@ -39,8 +42,8 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
             - v1-dependencies-
-      - run: BUCKET=$STAGING_BUCKET DIST_ID=$STAGING_DIST_ID TARGET=STAGING npm run build
-      - run: BUCKET=$STAGING_BUCKET DIST_ID=$STAGING_DIST_ID TARGET=STAGING npm run deploy
+      - run: TARGET=STAGING npm run build
+      - run: aws s3 sync ./dist s3://proto-dists/$CIRCLE_TAG/staging --delete
 
   build_deploy-demo:
     docker:
@@ -51,7 +54,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
             - v1-dependencies-
-      - run: BUCKET=$DEMO_BUCKET DIST_ID=$DEMO_DIST_ID TARGET=DEMO npm run build
+      - run: TARGET=DEMO npm run build
       - run: BUCKET=$DEMO_BUCKET DIST_ID=$DEMO_DIST_ID TARGET=DEMO npm run deploy
 
   build_deploy-production:
@@ -63,7 +66,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
             - v1-dependencies-
-      - run: BUCKET=$PRODUCTION_BUCKET DIST_ID=$PRODUCTION_DIST_ID TARGET=PRODUCTION npm run build
+      - run: TARGET=PRODUCTION npm run build
       - run: BUCKET=$PRODUCTION_BUCKET DIST_ID=$PRODUCTION_DIST_ID TARGET=PRODUCTION npm run deploy
 
 workflows:
@@ -73,6 +76,9 @@ workflows:
       - test:
           requires:
             - install-dependencies_type-check__format_lint
-      - build_deploy-production:
+      - build_deploy-staging:
           requires:
             - test
+          filters:
+            tags:
+              only: /^v1\.\d+\.\d+$/
