@@ -53,7 +53,7 @@ jobs:
       - run: TARGET=PRODUCTION npm run build
       - run: aws s3 sync ./dist s3://$BUILDS_BUCKET/$CIRCLE_TAG/production --delete
 
-  build:
+  deploy-staging:
     docker:
       - image: circleci/node:12
     steps:
