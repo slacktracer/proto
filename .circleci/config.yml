@@ -76,16 +76,28 @@ jobs:
 workflows:
   integrate_delivery:
     jobs:
-      - install-dependencies_type-check_format_lint
+      - install-dependencies_type-check_format_lint:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              # only: /^v1\.\d+\.\d+$/
+              ignore: /.*/
       - test:
           requires:
             - install-dependencies_type-check_format_lint
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              # only: /^v1\.\d+\.\d+$/
+              ignore: /.*/
       - build_deploy-staging:
           requires:
             - test
           filters:
-            # tags:
-              # only: /^v.*/
+            tags:
+              only: /^v.*/
             branches:
-              only: /^v1\.\d+\.\d+$/
-              # ignore: /.*/
+              # only: /^v1\.\d+\.\d+$/
+              ignore: /.*/
