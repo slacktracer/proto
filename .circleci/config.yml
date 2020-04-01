@@ -84,8 +84,8 @@ workflows:
           requires:
             - test
           filters:
-            tags:
-              # only: /^v1\.\d+\.\d+$/
-              only: /^v.*/
+            # tags:
+              # only: /^v.*/
             branches:
-              ignore: /.*/
+              only: /^v1\.\d+\.\d+$/
+              # ignore: /.*/
