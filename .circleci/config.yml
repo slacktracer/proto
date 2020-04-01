@@ -4,7 +4,7 @@ orbs:
   aws-cli: circleci/aws-cli@1.0.0
 
 jobs:
-  install-dependencies_type-check_format_lint:
+  install-dependencies_&_type-check_&_format_&_lint:
     docker:
       - image: circleci/node:12
     steps:
@@ -33,7 +33,7 @@ jobs:
             - v1-dependencies-
       - run: npm test
 
-  build_deploy-staging:
+  build_&_deploy-staging:
     docker:
       - image: circleci/node:12
     steps:
@@ -47,9 +47,10 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           aws-region: AWS_REGION
-      - run: aws s3 sync ./dist s3://proto-dists/$CIRCLE_TAG/staging --delete
+      - run: aws s3 sync ./dist s3://com.slacktracer.proto-builds/$CIRCLE_TAG/staging --delete
+      - run: aws s3 sync ./dist s3://staging-proto.slacktracer.com --delete
 
-  build_deploy-demo:
+  build-demo:
     docker:
       - image: circleci/node:12
     steps:
@@ -59,9 +60,13 @@ jobs:
             - v1-dependencies-{{ checksum "package-lock.json" }}
             - v1-dependencies-
       - run: TARGET=DEMO npm run build
-      - run: BUCKET=$DEMO_BUCKET DIST_ID=$DEMO_DIST_ID TARGET=DEMO npm run deploy
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_REGION
+      - run: aws s3 sync ./dist s3://com.slacktracer.proto-builds/$CIRCLE_TAG/demo --delete
 
-  build_deploy-production:
+  build-production:
     docker:
       - image: circleci/node:12
     steps:
@@ -71,33 +76,46 @@ jobs:
             - v1-dependencies-{{ checksum "package-lock.json" }}
             - v1-dependencies-
       - run: TARGET=PRODUCTION npm run build
-      - run: BUCKET=$PRODUCTION_BUCKET DIST_ID=$PRODUCTION_DIST_ID TARGET=PRODUCTION npm run deploy
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_REGION
+      - run: aws s3 sync ./dist s3://com.slacktracer.proto-builds/$CIRCLE_TAG/production --delete
 
 workflows:
   integrate_delivery:
     jobs:
-      - install-dependencies_type-check_format_lint:
+      - install-dependencies_&_type-check_&_format_&_lint:
           filters:
             tags:
-              only: /^v.*/
-            branches:
-              # only: /^v1\.\d+\.\d+$/
-              ignore: /.*/
+              only: /^.*/
       - test:
           requires:
-            - install-dependencies_type-check_format_lint
+            - install-dependencies_&_type-check_&_format_&_lint
           filters:
             tags:
-              only: /^v.*/
-            branches:
-              # only: /^v1\.\d+\.\d+$/
-              ignore: /.*/
-      - build_deploy-staging:
+              only: /^.*/
+      - build_&_deploy-staging:
           requires:
             - test
           filters:
             tags:
-              only: /^v.*/
+              only: /^v1\.\d+\.\d+$/
             branches:
-              # only: /^v1\.\d+\.\d+$/
+              ignore: /.*/
+      - build-demo:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /^v1\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
+      - build-production:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /^v1\.\d+\.\d+$/
+            branches:
               ignore: /.*/
