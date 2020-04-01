@@ -33,7 +33,7 @@ jobs:
             - v1-dependencies-
       - run: npm test
 
-  build_deploy-staging:
+  build:
     docker:
       - image: circleci/node:12
     steps:
@@ -42,45 +42,27 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
             - v1-dependencies-
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_REGION
       - run: TARGET=STAGING npm run build
-      - aws-cli/setup:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          aws-region: AWS_REGION
-      - run: aws s3 sync ./dist s3://com.slacktracer.proto-builds/$CIRCLE_TAG/staging --delete
-      - run: aws s3 sync ./dist s3://staging-proto.slacktracer.com --delete
-
-  build-demo:
-    docker:
-      - image: circleci/node:12
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package-lock.json" }}
-            - v1-dependencies-
+      - run: aws s3 sync ./dist s3://$BUILDS_BUCKET/$CIRCLE_TAG/staging --delete
       - run: TARGET=DEMO npm run build
-      - aws-cli/setup:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          aws-region: AWS_REGION
-      - run: aws s3 sync ./dist s3://com.slacktracer.proto-builds/$CIRCLE_TAG/demo --delete
+      - run: aws s3 sync ./dist s3://$BUILDS_BUCKET/$CIRCLE_TAG/demo --delete
+      - run: TARGET=PRODUCTION npm run build
+      - run: aws s3 sync ./dist s3://$BUILDS_BUCKET/$CIRCLE_TAG/production --delete
 
-  build-production:
+  build:
     docker:
       - image: circleci/node:12
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package-lock.json" }}
-            - v1-dependencies-
-      - run: TARGET=PRODUCTION npm run build
       - aws-cli/setup:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           aws-region: AWS_REGION
-      - run: aws s3 sync ./dist s3://com.slacktracer.proto-builds/$CIRCLE_TAG/production --delete
+      - run: aws s3 sync s3://$BUILDS_BUCKET/$CIRCLE_TAG/staging s3://$STAGING_BUCKET --delete
 
 workflows:
   integrate_delivery:
@@ -95,7 +77,7 @@ workflows:
           filters:
             tags:
               only: /^.*/
-      - build_deploy-staging:
+      - build:
           requires:
             - test
           filters:
@@ -103,17 +85,9 @@ workflows:
               only: /^v1\.\d+\.\d+$/
             branches:
               ignore: /.*/
-      - build-demo:
+      - deploy-staging:
           requires:
-            - test
-          filters:
-            tags:
-              only: /^v1\.\d+\.\d+$/
-            branches:
-              ignore: /.*/
-      - build-production:
-          requires:
-            - test
+            - build
           filters:
             tags:
               only: /^v1\.\d+\.\d+$/
