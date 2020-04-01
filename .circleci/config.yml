@@ -4,7 +4,7 @@ orbs:
   aws-cli: circleci/aws-cli@1.0.0
 
 jobs:
-  install-dependencies_&_type-check_&_format_&_lint:
+  install-dependencies_type-check_format_lint:
     docker:
       - image: circleci/node:12
     steps:
@@ -33,7 +33,7 @@ jobs:
             - v1-dependencies-
       - run: npm test
 
-  build_&_deploy-staging:
+  build_deploy-staging:
     docker:
       - image: circleci/node:12
     steps:
@@ -85,17 +85,17 @@ jobs:
 workflows:
   integrate_delivery:
     jobs:
-      - install-dependencies_&_type-check_&_format_&_lint:
+      - install-dependencies_type-check_format_lint:
           filters:
             tags:
               only: /^.*/
       - test:
           requires:
-            - install-dependencies_&_type-check_&_format_&_lint
+            - install-dependencies_type-check_format_lint
           filters:
             tags:
               only: /^.*/
-      - build_&_deploy-staging:
+      - build_deploy-staging:
           requires:
             - test
           filters:
