@@ -52,8 +52,6 @@
     "webpack-merge": "^4.2.2"
   },
   "devDependencies": {
-    "dotenv": "^8.2.0",
-    "dotenv-webpack": "^1.7.0",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.8",
     "webpack-dev-server": "^3.10.3"

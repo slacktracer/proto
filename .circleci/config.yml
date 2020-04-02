@@ -22,7 +22,7 @@ jobs:
       - run: npm run type-check
       - run: npm run lint
 
-  test:
+  unit-tests:
     docker:
       - image: circleci/node:12
     steps:
@@ -63,6 +63,7 @@ jobs:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           aws-region: AWS_REGION
       - run: aws s3 sync s3://$BUILDS_BUCKET/$CIRCLE_TAG/staging s3://$STAGING_BUCKET --delete
+      - run: aws cloudfront create-invalidation --distribution-id $STAGING_DIST_ID --paths "/index.html"
 
 workflows:
   integrate_delivery:
@@ -71,7 +72,7 @@ workflows:
           filters:
             tags:
               only: /^.*/
-      - test:
+      - unit-tests:
           requires:
             - install-dependencies_type-check_format_lint
           filters:
@@ -79,7 +80,7 @@ workflows:
               only: /^.*/
       - build:
           requires:
-            - test
+            - unit-tests
           filters:
             tags:
               only: /^v1\.\d+\.\d+$/
