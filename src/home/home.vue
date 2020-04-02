@@ -26,9 +26,9 @@ export default {
   data(): Record<string, any> {
     return {
       // eslint-disable-next-line no-undef
-      crazy: !!$$__FF_CTHULHU__$$,
+      crazy: $$__FF_CTHULHU__$$,
       // eslint-disable-next-line no-undef
-      envvar: $$__DATA__$$ || process.env.DATA,
+      envvar: $$__DATA__$$,
       greeting: "Hello",
       version,
     };

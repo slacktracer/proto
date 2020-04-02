@@ -1,8 +1,9 @@
-const buildObject = ({ names, prefix, target, suffix }) => {
+const buildObject = ({ names, prefix, source, suffix, target }) => {
   return names.reduce((reduction, name) => {
     let envVarValueForTarget = getEnvVarValueForTarget({
       target,
       name,
+      source,
     });
 
     reduction[`${prefix}${name}${suffix}`] = envVarValueForTarget;
@@ -11,21 +12,37 @@ const buildObject = ({ names, prefix, target, suffix }) => {
   }, {});
 };
 
-const getEnvVarValueForTarget = ({ target, name }) => {
+const getEnvVarValueForTarget = ({ name, source, target }) => {
   switch (target) {
     case "PRODUCTION":
-      return JSON.stringify(process.env[name]);
+      return JSON.stringify(source[name]);
     case "DEMO":
-      return JSON.stringify(process.env[`DEMO_${name}`]);
+      return JSON.stringify(source[`DEMO_${name}`]);
     case "STAGING":
-      return JSON.stringify(process.env[`STAGING_${name}`]);
+      return JSON.stringify(source[`STAGING_${name}`]);
     default:
-      return JSON.stringify(process.env[name]);
+      return JSON.stringify(source[name]);
   }
 };
 
 export const buildGlobalsObjectFromEnv = ({ globals, target }) => {
   let { names, prefix, suffix } = globals;
 
-  return buildObject({ names, prefix, target, suffix });
+  if (target === undefined) {
+    return buildObject({
+      names: Object.keys(names),
+      prefix,
+      source: names,
+      suffix,
+      target,
+    });
+  }
+
+  return buildObject({
+    names: Object.keys(names),
+    prefix,
+    source: process.env,
+    suffix,
+    target,
+  });
 };

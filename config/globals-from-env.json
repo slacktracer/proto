@@ -1,5 +1,8 @@
 {
-  "names": ["DATA", "FF_CTHULHU"],
+  "names": {
+    "DATA": "I'm localing here!",
+    "FF_CTHULHU": "My is name is not Cthulhu!"
+  },
   "prefix": "$$__",
   "suffix": "__$$"
 }
