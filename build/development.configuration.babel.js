@@ -1,3 +1,4 @@
+import Dotenv from "dotenv-webpack";
 import webpackMerge from "webpack-merge";
 
 import { baseConfiguration } from "./base.configuration";
@@ -18,6 +19,7 @@ const developmentConfiguration = {
       },
     ],
   },
+  plugins: [new Dotenv({ systemvars: true })],
 };
 
 export default webpackMerge(baseConfiguration, developmentConfiguration);

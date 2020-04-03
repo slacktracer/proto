@@ -1,4 +1,3 @@
-import Dotenv from "dotenv-webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import * as path from "path";
 import VueLoaderPlugin from "vue-loader/lib/plugin";
@@ -48,7 +47,6 @@ export const baseConfiguration = {
     publicPath: "/",
   },
   plugins: [
-    new Dotenv({ systemvars: true }),
     new HtmlWebpackPlugin({ template: "./src/index.html" }),
     new VueLoaderPlugin(),
   ],
