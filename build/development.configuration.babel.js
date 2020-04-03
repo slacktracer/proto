@@ -1,9 +1,6 @@
-import { DefinePlugin } from "webpack";
 import webpackMerge from "webpack-merge";
 
-import globals from "../config/globals-from-env.json";
 import { baseConfiguration } from "./base.configuration";
-import { buildGlobalsObjectFromEnv } from "./build-globals-object-from-env";
 
 const developmentConfiguration = {
   devServer: {
@@ -21,14 +18,6 @@ const developmentConfiguration = {
       },
     ],
   },
-  plugins: [
-    new DefinePlugin(
-      buildGlobalsObjectFromEnv({
-        globals,
-        target: process.env.TARGET,
-      }),
-    ),
-  ],
 };
 
 export default webpackMerge(baseConfiguration, developmentConfiguration);
