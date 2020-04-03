@@ -13,7 +13,7 @@
     "test": "jest",
     "type-check": "tsc --project ./src/tsconfig.json",
     "type-check_format-check_lint": "npm run type-check && npm run format-check && npm run lint",
-    "type-check-then-lint-staged": "npm run type-check && lint-staged"
+    "type-check_lint-staged": "npm run type-check && lint-staged"
   },
   "config": {
     "development_server_port": 3000,
