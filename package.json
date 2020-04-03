@@ -7,10 +7,12 @@
     "lint": "eslint . --ext .js,.ts,.vue",
     "lint:fix": "eslint . --ext .js,.ts,.vue --fix",
     "patch": "npm version patch -m 'Build v%s' && git push --follow-tags",
+    "prepatch": "npm run type-check_format-check_lint",
     "serve": "PORT=$npm_package_config_development_server_port webpack-dev-server $npm_package_config_development",
     "start": "npm run serve",
     "test": "jest",
     "type-check": "tsc --project ./src/tsconfig.json",
+    "type-check_format-check_lint": "npm run type-check && npm run format-check && npm run lint",
     "type-check-then-lint-staged": "npm run type-check && lint-staged"
   },
   "config": {

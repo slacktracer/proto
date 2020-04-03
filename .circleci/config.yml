@@ -4,7 +4,7 @@ orbs:
   aws-cli: circleci/aws-cli@1.0.0
 
 jobs:
-  install-dependencies_type-check_format_lint:
+  install-dependencies_type-check_format-check_lint:
     docker:
       - image: circleci/node:12
     steps:
@@ -69,13 +69,13 @@ jobs:
 workflows:
   integrate_delivery:
     jobs:
-      - install-dependencies_type-check_format_lint:
+      - install-dependencies_type-check_format-check_lint:
           filters:
             tags:
               only: /^.*/
       - unit-tests:
           requires:
-            - install-dependencies_type-check_format_lint
+            - install-dependencies_type-check_format-check_lint
           filters:
             tags:
               only: /^.*/
