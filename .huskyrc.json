@@ -1,7 +1,5 @@
 {
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run type-check-then-lint-staged"
-    }
+  "hooks": {
+    "pre-commit": "npm run type-check-then-lint-staged"
   }
 }
