@@ -24,11 +24,10 @@ export default {
     HelloWorld,
   },
   data(): Record<string, any> {
+    console.log(process.env.FF_CTHULHU);
     return {
-      // eslint-disable-next-line no-undef
-      crazy: $$__FF_CTHULHU__$$,
-      // eslint-disable-next-line no-undef
-      envvar: $$__DATA__$$,
+      crazy: process.env.FF_CTHULHU,
+      envvar: process.env.DATA,
       greeting: "Hello",
       version,
     };

@@ -1,10 +1,7 @@
+import Dotenv from "dotenv-webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import * as path from "path";
 import VueLoaderPlugin from "vue-loader/lib/plugin";
-import { DefinePlugin } from "webpack";
-
-import globals from "../config/globals-from-env.json";
-import { buildGlobalsObjectFromEnv } from "./build-globals-object-from-env";
 
 export const baseConfiguration = {
   entry: "./src/main.ts",
@@ -51,12 +48,7 @@ export const baseConfiguration = {
     publicPath: "/",
   },
   plugins: [
-    new DefinePlugin(
-      buildGlobalsObjectFromEnv({
-        globals,
-        target: process.env.TARGET,
-      }),
-    ),
+    new Dotenv({ systemvars: true }),
     new HtmlWebpackPlugin({ template: "./src/index.html" }),
     new VueLoaderPlugin(),
   ],

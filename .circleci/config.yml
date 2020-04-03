@@ -33,7 +33,7 @@ jobs:
             - v1-dependencies-
       - run: npm test
 
-  build:
+  build-staging:
     docker:
       - image: circleci/node:12
     steps:
@@ -46,11 +46,39 @@ jobs:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           aws-region: AWS_REGION
-      - run: TARGET=STAGING npm run build
+      - run: npm run build
       - run: aws s3 sync ./dist s3://$BUILDS_BUCKET/$CIRCLE_TAG/staging --delete
-      - run: TARGET=DEMO npm run build
+
+  build-demo:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v1-dependencies-
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_REGION
+      - run: npm run build
       - run: aws s3 sync ./dist s3://$BUILDS_BUCKET/$CIRCLE_TAG/demo --delete
-      - run: TARGET=PRODUCTION npm run build
+
+  build-production:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v1-dependencies-
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_REGION
+      - run: npm run build
       - run: aws s3 sync ./dist s3://$BUILDS_BUCKET/$CIRCLE_TAG/production --delete
 
   deploy-staging:
@@ -79,7 +107,26 @@ workflows:
           filters:
             tags:
               only: /^.*/
-      - build:
+      - build-staging:
+          context: PROTO_ENV_STAGING
+          requires:
+            - unit-tests
+          filters:
+            tags:
+              only: /^v1\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
+      - build-demo:
+          context: PROTO_ENV_DEMO
+          requires:
+            - unit-tests
+          filters:
+            tags:
+              only: /^v1\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
+      - build-production:
+          context: PROTO_ENV_PRODUCTION
           requires:
             - unit-tests
           filters:
@@ -89,7 +136,7 @@ workflows:
               ignore: /.*/
       - deploy-staging:
           requires:
-            - build
+            - build-staging
           filters:
             tags:
               only: /^v1\.\d+\.\d+$/
