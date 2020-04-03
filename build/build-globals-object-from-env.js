@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+import fs from "fs";
+
 const buildObject = ({ names, prefix, source, suffix, target }) => {
   return names.reduce((reduction, name) => {
     let envVarValueForTarget = getEnvVarValueForTarget({
@@ -29,17 +32,20 @@ export const buildGlobalsObjectFromEnv = ({ globals, target }) => {
   let { names, prefix, suffix } = globals;
 
   if (target === undefined) {
+    const localEnvVarsBuffer = fs.readFileSync(".env");
+    const parsedLocalEnvVars = dotenv.parse(localEnvVarsBuffer);
+
     return buildObject({
-      names: Object.keys(names),
+      names,
       prefix,
-      source: names,
+      source: parsedLocalEnvVars,
       suffix,
       target,
     });
   }
 
   return buildObject({
-    names: Object.keys(names),
+    names,
     prefix,
     source: process.env,
     suffix,

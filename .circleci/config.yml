@@ -63,6 +63,7 @@ jobs:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           aws-region: AWS_REGION
       - run: aws s3 sync s3://$BUILDS_BUCKET/$CIRCLE_TAG/staging s3://$STAGING_BUCKET --delete
+      # https://github.com/aws/aws-cli/issues/5038
       - run: AWS_PAGER="" aws cloudfront create-invalidation --distribution-id $STAGING_DIST_ID --paths "/index.html"
 
 workflows:
