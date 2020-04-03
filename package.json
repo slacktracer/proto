@@ -1,5 +1,5 @@
 {
-  "version": "1.0.21",
+  "version": "1.0.22",
   "scripts": {
     "build": "webpack $npm_package_config_production",
     "format": "prettier . --write",
