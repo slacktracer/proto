@@ -2,6 +2,8 @@
   "version": "1.0.25",
   "scripts": {
     "build": "webpack $npm_package_config_production",
+    "cypress:run": "cypress run",
+    "cypress:open": "cypress open",
     "format": "prettier . --write",
     "format-check": "prettier . --check",
     "lint": "eslint . --ext .js,.ts,.vue",
@@ -11,6 +13,8 @@
     "serve": "PORT=$npm_package_config_development_server_port webpack-dev-server $npm_package_config_development",
     "start": "npm run serve",
     "test": "jest",
+    "test:e2e": "npm run cypress:run",
+    "test:unit": "npm test",
     "type-check": "tsc --project ./src/tsconfig.json",
     "type-check_format-check_lint": "npm run type-check && npm run format-check && npm run lint",
     "type-check_lint-staged": "npm run type-check && lint-staged"
@@ -55,6 +59,7 @@
   },
   "devDependencies": {
     "cypress": "^4.3.0",
+    "eslint-plugin-cypress": "^2.10.3",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.8",
     "webpack-dev-server": "^3.10.3"
