@@ -108,7 +108,7 @@ workflows:
             tags:
               only: /^.*/
       - build-staging:
-          context: PROTO_ENV_STAGING
+          context: $(PROJECT_NAME)_ENV_STAGING
           requires:
             - unit-tests
           filters:
@@ -117,7 +117,7 @@ workflows:
             branches:
               ignore: /.*/
       - build-demo:
-          context: PROTO_ENV_DEMO
+          context: $(PROJECT_NAME)_ENV_DEMO
           requires:
             - unit-tests
           filters:
@@ -126,7 +126,7 @@ workflows:
             branches:
               ignore: /.*/
       - build-production:
-          context: PROTO_ENV_PRODUCTION
+          context: $(PROJECT_NAME)_ENV_PRODUCTION
           requires:
             - unit-tests
           filters:
