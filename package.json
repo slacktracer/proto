@@ -1,5 +1,5 @@
 {
-  "version": "1.0.29",
+  "version": "1.0.30",
   "scripts": {
     "build": "webpack $npm_package_config_production",
     "cypress:run": "cypress run",
