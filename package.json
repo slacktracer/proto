@@ -1,6 +1,6 @@
 {
   "name": "proto",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "scripts": {
     "build": "webpack $npm_package_config_production",
     "config": "babel-node ./config/writeCircleCIConfigYAML.js",
