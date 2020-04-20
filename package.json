@@ -1,6 +1,6 @@
 {
   "name": "proto",
-  "version": "1.0.33",
+  "version": "1.0.34",
   "scripts": {
     "audit": "npm audit --audit-level=moderate",
     "build": "webpack $npm_package_config_production",
