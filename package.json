@@ -2,8 +2,9 @@
   "name": "proto",
   "version": "1.0.32",
   "scripts": {
+    "audit": "npm audit --audit-level=moderate",
     "build": "webpack $npm_package_config_production",
-    "config": "babel-node ./config/writeCircleCIConfigYAML.js",
+    "config": "npm run audit && npm i && babel-node ./config/writeCircleCIConfigYAML.js",
     "cypress:run": "cypress run",
     "cypress:open": "cypress open",
     "format": "prettier . --write",

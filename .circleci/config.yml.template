@@ -4,6 +4,14 @@ orbs:
   aws-cli: circleci/aws-cli@1.0.0
 
 jobs:
+  audit:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - run: sudo npm install -g npm
+      - run: npm audit --audit-level=low
+
   install-dependencies_type-check_format-check_lint:
     docker:
       - image: circleci/node:12
@@ -12,7 +20,6 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
-            - v1-dependencies-
       - run: npm ci
       - save_cache:
           paths:
@@ -30,7 +37,6 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
-            - v1-dependencies-
       - run: npm test
 
   build-staging:
@@ -41,7 +47,6 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
-            - v1-dependencies-
       - aws-cli/setup:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
@@ -57,7 +62,6 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
-            - v1-dependencies-
       - aws-cli/setup:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
@@ -73,7 +77,6 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
-            - v1-dependencies-
       - aws-cli/setup:
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
@@ -97,6 +100,12 @@ jobs:
 workflows:
   integrate_delivery:
     jobs:
+      - audit
+          filters:
+            tags:
+              only: /^v1\.\d+\.\d+$/
+            branches:
+              ignore: /.*/
       - install-dependencies_type-check_format-check_lint:
           filters:
             tags:
