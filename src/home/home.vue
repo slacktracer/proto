@@ -10,8 +10,7 @@
     </div>
     <img
       alt="Vue logo"
-      class="mb-2"
-      height="400"
+      class="mb-2 resp-image"
       src="./assets/chuttersnap-UmftXwTd8Q4-unsplash.jpg"
     />
     <p>
@@ -61,5 +60,8 @@ export default {
 <style scoped>
 .home {
   text-align: center;
+}
+.resp-image {
+  max-width: 100vw;
 }
 </style>
