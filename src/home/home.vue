@@ -1,44 +1,65 @@
 <template>
   <div class="home">
+    <hello-world msg="Hello, World!" />
     <div>
       <p>
-        {{ greeting }} ({{ val }}) World! {{ version }}::{{ envvar }}::{{
-          stuff("", 10)
-        }}
-        --- {{ crazy }}
+        {{ greeting }} ({{ val }}) World! {{ envvar }}::{{
+          stuff("string", 10)
+        }}::{{ crazy }}
       </p>
     </div>
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Tentative seed project" />
+    <img
+      alt="Vue logo"
+      class="mb-2"
+      height="400"
+      src="./assets/chuttersnap-UmftXwTd8Q4-unsplash.jpg"
+    />
+    <p>
+      Photo by
+      <a
+        href="https://unsplash.com/@chuttersnap?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"
+        >chuttersnap</a
+      >
+      on
+      <a
+        href="/s/photos/wild-rooster?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"
+        >Unsplash</a
+      >
+    </p>
   </div>
 </template>
 
 <script lang="ts">
-import { version } from "../../package.json";
-import x from "../something";
-import HelloWorld from "./components/hello-world.vue";
+import x from "src/home/services/something";
+import helloWorld from "src/home/components/hello-world.vue";
+
+console.log(process.env.FF_CTHULHU);
 
 export default {
   name: "Home",
   components: {
-    HelloWorld,
+    helloWorld,
   },
   data(): Record<string, any> {
-    console.log(process.env.FF_CTHULHU);
     return {
       crazy: process.env.FF_CTHULHU,
       envvar: process.env.DATA,
       greeting: "Hello",
-      version,
     };
   },
   computed: {
     val: (): number => x(),
   },
   methods: {
-    stuff: function stuff(): string {
-      return "test";
+    stuff(a: string, b: number): string {
+      return "test" + a + b;
     },
   },
 };
 </script>
+
+<style scoped>
+.home {
+  text-align: center;
+}
+</style>

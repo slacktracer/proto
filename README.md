@@ -10,6 +10,20 @@ Get this repository's latest content inside a new git repository using [degit](h
 npx degit https://github.com/slacktracer/vvw.git --force
 ```
 
+Create a `.env` file at root level (`.`). It will be ignored by git.
+
+Add development environment variables as needed.
+
+```
+# stop and run npm start again after adding new environment variables
+
+BASE_URL=https://api.example.com
+```
+
+Then `npm i`...
+
+Then `npm start`!
+
 ## What's inside?
 
 ### Framework
@@ -113,8 +127,16 @@ Runs ESLint to... well, [lint](<https://en.wikipedia.org/wiki/Lint_(software)>) 
 These variables should be set at project level:
 
 **`AWS_ACCESS_KEY_ID`**
+
+The AWS access key ID. Who would have guessed?
+
 **`AWS_REGION`**
+
+The AWS region. But, honestly, it is always the same. You know it.
+
 **`AWS_SECRET_ACCESS_KEY`**
+
+Pretty much the same thing as the first one, but this one is _seeecret_...
 
 **`BUILDS_BUCKET`:**
 
@@ -136,17 +158,17 @@ It will be used to create an invalidation on CloudFront after the latest staging
 
 Setting variables for each environment in three easy steps!
 
-1.  Add the project name to the `package.json` file:
+1. Add the project name to the `package.json` file:
 
-        	{
-        		"name": "some_project_name",
-        		"version": "1.0.0",
-        		...
-        	}
+{
+"name": "some_project_name",
+"version": "1.0.0",
+...
+}
 
-2.  `npm run config`. It will create the `.circleci/config.yml` file.
+2. `npm run config`. It will create the `.circleci/config.yml` file.
 
-3.  Create a context for each environment with variables like `BASE_URL`.
+3. Create a context for each environment with variables like `BASE_URL`.
 
 #### Naming contexts
 
@@ -157,15 +179,3 @@ We should end up with something like this:
 - `SOME_PROJECT_NAME_ENV_STAGING`
 - `SOME_PROJECT_NAME_ENV_DEMO`
 - `SOME_PROJECT_NAME_ENV_PRODUCTION`
-
-## Development
-
-Create a `.env` file at root level (`.`).
-
-(It will be ignored by git.)
-
-Add the environment variables for development.
-
-    BASE_URL=https://api.example.com
-
-Then `npm run start`!

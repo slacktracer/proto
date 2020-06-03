@@ -1,4 +1,4 @@
-import { y } from "../../something";
+import { y } from "src/home/services/something";
 
 describe("some test about home", () => {
   it("should test something", () => {

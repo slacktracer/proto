@@ -1,19 +1,17 @@
 import Vue from "vue";
+import { BootstrapVue } from "bootstrap-vue";
 
-import App from "./app/app.vue";
-import router from "./app/router";
-import store from "./app/store";
+import App from "src/app/app.vue";
+import router from "src/app/routers/main";
+import store from "src/app/stores/main";
+
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+
+Vue.use(BootstrapVue);
 
 new Vue({
   router,
   store,
   render: (h): any => h(App),
 }).$mount("#app");
-
-function stuff(value: number, other: string): string {
-  value;
-  other;
-  return "test";
-}
-
-console.log(stuff(2, "34"));

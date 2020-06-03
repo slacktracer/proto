@@ -53,6 +53,9 @@ export const baseConfiguration = {
     new VueLoaderPlugin(),
   ],
   resolve: {
+    alias: {
+      src: path.resolve(__dirname, "../src"),
+    },
     extensions: [".js", ".json", ".ts"],
   },
 };
