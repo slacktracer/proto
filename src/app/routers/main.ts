@@ -7,13 +7,13 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: (): any =>
+    component: (): Promise<object> =>
       import(/* webpackChunkName: "home" */ "src/home/home.vue"),
   },
   {
     path: "/about",
     name: "About",
-    component: (): any =>
+    component: (): Promise<object> =>
       import(/* webpackChunkName: "about" */ "src/about/about.vue"),
   },
 ];

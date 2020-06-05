@@ -3,43 +3,38 @@
     <hello-world msg="Hello, World!" />
     <div>
       <p>
-        {{ greeting }} ({{ val }}) World! {{ envvar }}::{{
-          stuff("string", 10)
-        }}::{{ crazy }}
+        {{ greeting }} ({{ val }}) World! from env: {{ envvar }}::{{
+          stuff("test-", 42)
+        }}::from env: {{ crazy }}
       </p>
     </div>
-    <img
-      alt="Vue logo"
-      class="mb-2 resp-image"
-      src="./assets/chuttersnap-UmftXwTd8Q4-unsplash.jpg"
-    />
-    <p>
-      Photo by
-      <a
-        href="https://unsplash.com/@chuttersnap?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"
-        >chuttersnap</a
+    <a
+      href="https://www.deviantart.com/dio-03/art/MEKANO-Retrofix-d-201919932"
+      target="_blank"
+    >
+      <img
+        alt="Mekano"
+        class="image mb-2"
+        src="./assets/mekano-big-screenRS.jpg"
       >
-      on
-      <a
-        href="/s/photos/wild-rooster?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"
-        >Unsplash</a
-      >
-    </p>
+    </a>
   </div>
 </template>
 
 <script lang="ts">
+import Vue from "vue";
+
 import x from "src/home/services/something";
 import helloWorld from "src/home/components/hello-world.vue";
 
 console.log(process.env.FF_CTHULHU);
 
-export default {
+export default Vue.extend({
   name: "Home",
   components: {
     helloWorld,
   },
-  data(): Record<string, any> {
+  data(): Record<string, object | string> {
     return {
       crazy: process.env.FF_CTHULHU,
       envvar: process.env.DATA,
@@ -51,17 +46,18 @@ export default {
   },
   methods: {
     stuff(a: string, b: number): string {
-      return "test" + a + b;
+      return "test-" + a + b;
     },
   },
-};
+});
 </script>
 
 <style scoped>
 .home {
   text-align: center;
 }
-.resp-image {
+.image {
   max-width: 100vw;
+  width: 600px;
 }
 </style>

@@ -1,6 +1,5 @@
 {
-  "name": "proto",
-  "version": "1.0.36",
+  "version": "1.2.0",
   "scripts": {
     "audit": "npm audit --audit-level=moderate",
     "build": "webpack $npm_package_config_production",
@@ -35,6 +34,7 @@
     "@types/jest": "^25.2.3",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "bootstrap": "^4.5.0",

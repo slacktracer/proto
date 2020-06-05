@@ -1,4 +1,4 @@
-import Vue from "vue";
+import Vue, { VNode } from "vue";
 import { BootstrapVue } from "bootstrap-vue";
 
 import App from "src/app/app.vue";
@@ -13,5 +13,5 @@ Vue.use(BootstrapVue);
 new Vue({
   router,
   store,
-  render: (h): any => h(App),
+  render: (h): VNode => h(App),
 }).$mount("#app");
