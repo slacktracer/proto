@@ -2,10 +2,7 @@
   <b-container fluid>
     <!-- User Interface controls -->
     <b-row>
-      <b-col
-        lg="6"
-        class="my-1"
-      >
+      <b-col lg="6" class="my-1">
         <b-form-group
           label="Sort"
           label-cols-sm="3"
@@ -44,10 +41,7 @@
         </b-form-group>
       </b-col>
 
-      <b-col
-        lg="6"
-        class="my-1"
-      >
+      <b-col lg="6" class="my-1">
         <b-form-group
           label="Initial sort"
           label-cols-sm="3"
@@ -65,10 +59,7 @@
         </b-form-group>
       </b-col>
 
-      <b-col
-        lg="6"
-        class="my-1"
-      >
+      <b-col lg="6" class="my-1">
         <b-form-group
           label="Filter"
           label-cols-sm="3"
@@ -85,10 +76,7 @@
               placeholder="Type to Search"
             />
             <b-input-group-append>
-              <b-button
-                :disabled="!filter"
-                @click="filter = ''"
-              >
+              <b-button :disabled="!filter" @click="filter = ''">
                 Clear
               </b-button>
             </b-input-group-append>
@@ -96,10 +84,7 @@
         </b-form-group>
       </b-col>
 
-      <b-col
-        lg="6"
-        class="my-1"
-      >
+      <b-col lg="6" class="my-1">
         <b-form-group
           label="Filter On"
           label-cols-sm="3"
@@ -108,10 +93,7 @@
           description="Leave all unchecked to filter on all data"
           class="mb-0"
         >
-          <b-form-checkbox-group
-            v-model="filterOn"
-            class="mt-1"
-          >
+          <b-form-checkbox-group v-model="filterOn" class="mt-1">
             <b-form-checkbox value="name">
               Name
             </b-form-checkbox>
@@ -125,11 +107,7 @@
         </b-form-group>
       </b-col>
 
-      <b-col
-        sm="5"
-        md="6"
-        class="my-1"
-      >
+      <b-col sm="5" md="6" class="my-1">
         <b-form-group
           label="Per page"
           label-cols-sm="6"
@@ -149,11 +127,7 @@
         </b-form-group>
       </b-col>
 
-      <b-col
-        sm="7"
-        md="6"
-        class="my-1"
-      >
+      <b-col sm="7" md="6" class="my-1">
         <b-pagination
           v-model="currentPage"
           :total-rows="totalRows"
@@ -193,10 +167,7 @@
         >
           Info modal
         </b-button>
-        <b-button
-          size="sm"
-          @click="row.toggleDetails"
-        >
+        <b-button size="sm" @click="row.toggleDetails">
           {{ row.detailsShowing ? "Hide" : "Show" }} Details
         </b-button>
       </template>
@@ -204,10 +175,7 @@
       <template v-slot:row-details="row">
         <b-card>
           <ul>
-            <li
-              v-for="(value, key) in row.item"
-              :key="key"
-            >
+            <li v-for="(value, key) in row.item" :key="key">
               {{ key }}: {{ value }}
             </li>
           </ul>

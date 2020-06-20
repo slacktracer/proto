@@ -18,5 +18,11 @@
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint"],
-  "root": true
+  "root": true,
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "error",
+    "no-unused-vars": "off",
+    "vue/html-self-closing": "off",
+    "vue/max-attributes-per-line": "off"
+  }
 }

@@ -8,13 +8,11 @@ export const z = (): void => {
   i;
 };
 
-export function stuff(value: number, other: string): string {
+export function notTest(value: number, other: string): string {
   value;
   other;
   return "test";
 }
-
-console.log(stuff(2, "34"));
 
 async function someAsyncFunction(): Promise<boolean> {
   return true;

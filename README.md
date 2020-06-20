@@ -78,6 +78,19 @@ Finally, the [`.editorconfig`](https://editorconfig.org/) file is there, at root
 
 It is supposed to [work out of the box with WebStorm](https://github.com/JetBrains/intellij-community/tree/master/plugins/editorconfig) and there is a plugin for [VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig).
 
+#### Some ESLint tweaks
+
+The following eslint-plugin-vue rules wre turned off because they conflict with Prettier.
+
+- [vue/max-attributes-per-line](https://eslint.vuejs.org/rules/html-self-closing.html)
+- [vue/html-self-closing](https://eslint.vuejs.org/rules/max-attributes-per-line.html)
+
+The rationale is that overall code formatting/style consistency is preferable to following every Vue recommended style (though they **are** very sensible :pensive:). A solution to accommodate both does not seem to exist at the time of writing. :disappointed: :woman_shrugging:
+
+The [@typescript-eslint/no-unused-vars](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unused-vars.md) rule is set as an error instead of a warning (the default).
+
+The rationale is that **nobody** likes stupid unused variables hanging around and making the code look silly and stuff... :unamused:
+
 ## Run npm Run
 
 These are (allegedly) the most important scripts inside package.json.

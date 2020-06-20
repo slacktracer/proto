@@ -16,7 +16,7 @@
         alt="Mekano"
         class="image mb-2"
         src="./assets/mekano-big-screenRS.jpg"
-      >
+      />
     </a>
   </div>
 </template>
@@ -24,8 +24,8 @@
 <script lang="ts">
 import Vue from "vue";
 
-import x from "src/home/services/something";
 import helloWorld from "src/home/components/hello-world.vue";
+import x, { notTest } from "src/home/services/something";
 
 console.log(process.env.FF_CTHULHU);
 
@@ -46,6 +46,7 @@ export default Vue.extend({
   },
   methods: {
     stuff(a: string, b: number): string {
+      notTest(8, "some string");
       return "test-" + a + b;
     },
   },

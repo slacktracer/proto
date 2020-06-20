@@ -2,5 +2,5 @@
   "moduleNameMapper": {
     "^src(.*)$": "<rootDir>/src$1"
   },
-  "testMatch": ["**/tests/unit/jest/**/*.test.ts"]
+  "testMatch": ["<rootDir>/tests/unit/jest/**/*.spec.ts"]
 }
